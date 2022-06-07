@@ -51,7 +51,7 @@ class Eiten:
         returns_matrix = []
         returns_matrix_percentages = []
         predicted_return_vectors = []
-        for i in range(0, len(historical_price_info)):
+        for i in range(len(historical_price_info)):
             close_prices = list(historical_price_info[i]["Close"])
             log_returns = [math.log(close_prices[i] / close_prices[i - 1])
                            for i in range(1, len(close_prices))]
