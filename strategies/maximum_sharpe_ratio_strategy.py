@@ -19,6 +19,6 @@ class MaximumSharpeRatioStrategy:
 		numerator = np.dot(inverse_cov_matrix, returns_vector)
 		denominator = np.dot(np.dot(ones.transpose(), inverse_cov_matrix), returns_vector)
 		msr_portfolio_weights = numerator / denominator
-		
-		portfolio_weights_dictionary = dict([(symbols[x], msr_portfolio_weights[x]) for x in range(0, len(msr_portfolio_weights))])
-		return portfolio_weights_dictionary
+
+		return dict([(symbols[x], msr_portfolio_weights[x])
+		             for x in range(len(msr_portfolio_weights))])

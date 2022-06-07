@@ -32,7 +32,7 @@ class MontoCarloSimulator:
 		"""
 		return ((new - old) * 100) / old
 
-	def draw_portfolio_performance_chart(self, returns_matrix, portfolio_weights_dictionary, strategy_name): 
+	def draw_portfolio_performance_chart(self, returns_matrix, portfolio_weights_dictionary, strategy_name):
 		"""
 		Draw returns chart for portfolio performance
 		"""
@@ -46,7 +46,12 @@ class MontoCarloSimulator:
 		# Plot
 		x = np.arange(len(portfolio_returns_cumulative))
 		plt.axhline(y = 0, linestyle = 'dotted', alpha = 0.3, color = 'black')
-		plt.plot(x, portfolio_returns_cumulative, linewidth = 2.0, label = "Projected Returns from " + str(strategy_name))
+		plt.plot(
+		    x,
+		    portfolio_returns_cumulative,
+		    linewidth=2.0,
+		    label=f"Projected Returns from {str(strategy_name)}",
+		)
 		plt.title("Simulated Future Returns", fontsize = 14)
 		plt.xlabel("Bars (Time Sorted)", fontsize = 14)
 		plt.ylabel("Cumulative Percentage Return", fontsize = 14)
@@ -86,8 +91,8 @@ class MontoCarloSimulator:
 			future_price_predictions, _ = self.simulate_and_get_future_prices(historical_close_prices, simulation_timesteps = max(simulation_timesteps, len(list(portfolio_data_dictionary[symbol]["future_prices"]))))
 			predicted_future_returns = [self.calculate_percentage_change(future_price_predictions[i - 1], future_price_predictions[i]) for i in range(1, len(future_price_predictions))]
 			returns_matrix.append(predicted_future_returns)
-			
-			
+
+
 		# Get portfolio returns
 		self.draw_portfolio_performance_chart(returns_matrix, portfolio_weights_dictionary, strategy_name)
 
@@ -110,20 +115,20 @@ class MontoCarloSimulator:
 		hist_dist = scipy.stats.rv_histogram(hist) # Distribution function
 
 		predicted_prices = []
+		new_close_prices_percentages = []
 		# Do 25 iterations to simulate prices
-		for iteration in range(25):
+		for _ in range(25):
 			new_close_prices = [close_prices[-1]]
-			new_close_prices_percentages = []
-			for i in range(simulation_timesteps):
+			for _ in range(simulation_timesteps):
 				random_value = random.uniform(0, 1)
 				return_value = round(np.exp(hist_dist.ppf(random_value)), 5) # Get simulated return
 				price_last_point = new_close_prices[-1]
 				price_next_point = price_last_point * return_value
 				percentage_change = self.calculate_percentage_change(price_last_point, price_next_point)
-					
+
 				# Add to list
 				new_close_prices.append(price_next_point)
-					
+
 			predicted_prices.append(new_close_prices)
 
 		# Calculate confidence intervals and average future returns. Conf intervals are not being used right now

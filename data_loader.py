@@ -53,13 +53,13 @@ class DataEngine:
         # Find period
         if self.args.data_granularity_minutes == 1:
             period = "7d"
-            interval = str(self.args.data_granularity_minutes) + "m"
+            interval = f"{str(self.args.data_granularity_minutes)}m"
         if self.args.data_granularity_minutes == 3600:
             period = "5y"
             interval = "1d"
         else:
             period = "30d"
-            interval = str(self.args.data_granularity_minutes) + "m"
+            interval = f"{str(self.args.data_granularity_minutes)}m"
 
         # Get stock price
         try:
@@ -151,7 +151,7 @@ class DataEngine:
         # extraction, let us remove that stuff
         historical_price_info, future_price_info, symbol_names = self.remove_bad_data(
             historical_price, future_price, symbol_names)
-        for i in range(0, len(symbol_names)):
+        for i in range(len(symbol_names)):
             self.data_dictionary[symbol_names[i]] = {
                 "historical_prices": historical_price_info[i],
                 "future_prices": future_price_info[i]}

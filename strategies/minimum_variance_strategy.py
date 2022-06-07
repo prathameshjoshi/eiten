@@ -17,5 +17,5 @@ class MinimumVarianceStrategy:
 		ones = np.ones(len(inverse_cov_matrix))
 		inverse_dot_ones = np.dot(inverse_cov_matrix, ones)
 		min_var_weights = inverse_dot_ones / np.dot( inverse_dot_ones, ones)
-		portfolio_weights_dictionary = dict([(symbols[x], min_var_weights[x]) for x in range(0, len(min_var_weights))])
-		return portfolio_weights_dictionary
+		return dict(
+		    [(symbols[x], min_var_weights[x]) for x in range(len(min_var_weights))])

@@ -26,7 +26,7 @@ class GeneticAlgoStrategy:
 		# Create initial genes
 		initial_genes = self.generate_initial_genes(symbols)
 
-		for i in range(self.iterations):
+		for _ in range(self.iterations):
 			# Select
 			top_genes = self.select(return_matrix, initial_genes)
 			#print("Iteration %d Best Sharpe Ratio: %.3f" % (i, top_genes[0][0]))
@@ -42,17 +42,18 @@ class GeneticAlgoStrategy:
 		return_matrix_transposed = return_matrix.transpose()
 		returns = np.dot(return_matrix_transposed, transposed_gene)
 		returns_cumsum = np.cumsum(returns)
-		
+
 		ga_portfolio_weights = best_gene
-		ga_portfolio_weights = dict([(symbols[x], ga_portfolio_weights[x]) for x in range(0, len(ga_portfolio_weights))])
+		ga_portfolio_weights = dict([(symbols[x], ga_portfolio_weights[x])
+		                             for x in range(len(ga_portfolio_weights))])
 		return ga_portfolio_weights
 
 	def generate_initial_genes(self, symbols):
 		total_symbols = len(symbols)
 
 		genes = []
-		for i in range(self.initial_genes):
-			gene = [random.uniform(-1, 1) for _ in range(0, total_symbols)]
+		for _ in range(self.initial_genes):
+			gene = [random.uniform(-1, 1) for _ in range(total_symbols)]
 			genes.append(gene)
 
 		return genes
@@ -61,12 +62,12 @@ class GeneticAlgoStrategy:
 		new_genes = []
 
 		for gene in genes: 
-			for x in range(0, self.mutation_iterations):
+			for _ in range(self.mutation_iterations):
 				mutation = gene + (self.weight_update_factor * np.random.uniform(-1, 1, self.gene_length))
 				mutation = list(mutation)
 				new_genes.append(mutation)
 
-		new_genes = genes + new_genes 
+		new_genes = genes + new_genes
 		random.shuffle(new_genes)
 		genes_to_keep = new_genes[:self.genes_in_each_iteration] 
 
@@ -95,16 +96,14 @@ class GeneticAlgoStrategy:
 		return genes_with_scores
 
 	def fitness_score(self, returns):
-		sharpe_returns = np.mean(returns) / np.std(returns)
-		return sharpe_returns
+		return np.mean(returns) / np.std(returns)
 
 	def generate_a_gene(self):
-		gene = [random.uniform(-1, 1) for _ in range(self.gene_length)]
-		return gene
+		return [random.uniform(-1, 1) for _ in range(self.gene_length)]
 
 	def crossover(self, population):
 		crossover_population = []
-		for z in range(0, len(population)):
+		for _ in range(len(population)):
 			if random.uniform(0, 1) < self.crossover_probability:
 				try:
 					random_gene_first = list(random.sample(population, 1)[0])

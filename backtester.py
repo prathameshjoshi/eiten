@@ -34,10 +34,7 @@ class BackTester:
         """
         Manage portfolio weights. If portfolio is long only, set the negative weights to zero.
         """
-        if is_long_only == 1:
-            weight = max(weight, 0)
-        else:
-            weight = weight
+        weight = max(weight, 0) if is_long_only == 1 else weight
         return weight
 
     def back_test(self, symbol_names, portfolio_weights_dictionary, portfolio_data_dictionary, historical_price_market, is_long_only, market_chart, strategy_name):

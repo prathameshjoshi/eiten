@@ -25,36 +25,36 @@ class StrategyManager:
 		Genetic algorithm based portfolio that maximizes sharpe ratio. This is my own implementation
 		"""
 		print("-* Calculating portfolio weights using genetic algorithm...")
-		portfolio_weights_dictionary = self.geneticAlgoStrategy.generate_portfolio(symbols, returns_matrix_percentages)
-		return portfolio_weights_dictionary
+		return self.geneticAlgoStrategy.generate_portfolio(
+		    symbols, returns_matrix_percentages)
 
 	def calculate_eigen_portfolio(self, symbols, covariance_matrix, eigen_portfolio_number):
 		"""
 		2nd Eigen Portfolio
 		"""
 		print("-$ Calculating portfolio weights using eigen values...")
-		portfolio_weights_dictionary = self.eigenPortfolioStrategy.generate_portfolio(symbols, covariance_matrix, eigen_portfolio_number)
-		return portfolio_weights_dictionary
+		return self.eigenPortfolioStrategy.generate_portfolio(
+		    symbols, covariance_matrix, eigen_portfolio_number)
 
 	def calculate_minimum_variance_portfolio(self, symbols, covariance_matrix):
 		"""
 		Minimum variance portfolio
 		"""
 		print("-! Calculating portfolio weights using minimum variance portfolio algorithm...")
-		portfolio_weights_dictionary = self.minimumVarianceStrategy.generate_portfolio(symbols, covariance_matrix)
-		return portfolio_weights_dictionary
+		return self.minimumVarianceStrategy.generate_portfolio(
+		    symbols, covariance_matrix)
 
 	def calculate_maximum_sharpe_portfolio(self, symbols, covariance_matrix, returns_vector):
 		"""
 		Maximum sharpe portfolio
 		"""
 		print("-# Calculating portfolio weights using maximum sharpe portfolio algorithm...")
-		portfolio_weights_dictionary = self.maximumSharpeRatioStrategy.generate_portfolio(symbols, covariance_matrix, returns_vector)
-		return portfolio_weights_dictionary
+		return self.maximumSharpeRatioStrategy.generate_portfolio(
+		    symbols, covariance_matrix, returns_vector)
 
 	def random_matrix_theory_based_cov(self, returns_matrix):
 		"""
 		Covariance matrix filtering using random matrix theory
 		"""
-		filtered_covariance_matrix = self.strategyHelperFunctions.random_matrix_theory_based_cov(returns_matrix)
-		return filtered_covariance_matrix
+		return self.strategyHelperFunctions.random_matrix_theory_based_cov(
+		    returns_matrix)
